@@ -61,11 +61,6 @@ app.get('/dashboard', auth, (req, res) => {
 })
 
 
-/**
- * Router Middleware
- * Router - /user/*
- * Method - *
- */
 app.use('/user', user)
 
 app.listen(3000, (req, res) => {

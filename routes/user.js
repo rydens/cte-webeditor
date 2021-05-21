@@ -7,11 +7,6 @@ const router = express.Router()
 const User = require('../model/User')
 const auth = require('../middleware/auth')
 
-/**
- * @method - POST
- * @param - /signup
- * @description - User SignUp
- */
  
 router.post(
     '/signup',
@@ -49,9 +44,7 @@ router.post(
             if (user) {
                 return res.status(400).json({
                     errors: [
-                        {
-                            value: "",
-                            msg: "user already created!",
+                        { value: "", msg: "user already created!",
                             param: "email",
                             location: "body"
                         }
@@ -178,19 +171,14 @@ router.post(
     }
 )
 
-/**
- * @method - GET
- * @description - Get LoggedIn User
- * @param - /user/me
- */
- router.get('/me', auth, async (req, res) => {
-     try {
-         let user = await User.findById(req.session.user.id, '_id createdAt username email')
-         res.send(user)
-     } catch (err) {
-         res.send({ message: "Error in fetching user" })
-         console.log(err)
-     }
- })
+router.get('/me', auth, async (req, res) => {
+    try {
+        let user = await User.findById(req.session.user.id, '_id createdAt username email')
+        res.send(user)
+    } catch (err) {
+        res.send({ message: "Error in fetching user" })
+        console.log(err)
+    }
+})
 
 module.exports = router
