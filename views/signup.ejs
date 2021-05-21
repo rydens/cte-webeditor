@@ -1,0 +1,45 @@
+<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script></head>
+
+<h1> Sign up form </h1>
+  
+<span id="errors"></span>
+<form action="/user/signup" method="POST" id="signupForm">
+    <input type="text" name="username" placeholder="username" />
+    <input type="email" name="email" placeholder="email" />
+    <input type="password" name="password" placeholder="password" />
+    <button>Submit</button>
+</form>
+  
+<h1>This is home page</h1>
+  
+<li><a href="/signup">Sign up!!</a></li>
+<li><a href="/login">Login</a></li>
+<li><a href="/logout">Logout</a></li>
+<li><a href="/">Home</a></li>
+<li><a href="/dashboard">Dashboard</a></li>
+
+
+<script type="text/javascript">
+    $('#signupForm').submit((event) => {
+        event.preventDefault()
+        //console.log($('#signupForm').find("[name='username']").val())
+        $.ajax({
+            type: 'POST',
+            url: '/user/signup',
+            /*data: {
+                username: $('#signupForm').find("[name='username']").val(),
+                email: $('#signupForm').find("[name='email']").val(),
+                password: $('#signupForm').find("[name='password']").val()
+            },*/
+            data: $('#signupForm').serialize(),
+            complete: (response) => {
+                console.log(response.responseJSON)
+                if (response.responseJSON) {
+                    $('#errors').text(response.responseJSON.errors.map(a => a.msg))
+                } else {
+                    window.location.href = "/dashboard"
+                }
+            }
+        })
+    })
+</script>
